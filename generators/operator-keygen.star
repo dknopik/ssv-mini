@@ -50,7 +50,7 @@ def generate_operator_keys(plan, index):
     private_key_result = plan.exec(
         service_name=constants.ANCHOR_CLI_SERVICE_NAME,
         recipe=ExecRecipe(
-            command=["cat", key_dir + "private_key.txt"],
+            command=["cat", key_dir + "unencrypted_private_key.txt"],
             extract={"private": "."},
         ),
     )
@@ -58,7 +58,7 @@ def generate_operator_keys(plan, index):
     # Store the private key file as the artifact
     pem_artifact = plan.store_service_files(
         service_name=constants.ANCHOR_CLI_SERVICE_NAME,
-        src=key_dir + "private_key.txt",
+        src=key_dir + "unencrypted_private_key.txt",
         name="key-{}".format(index),
     )
 
