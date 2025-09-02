@@ -1,28 +1,43 @@
 # https://github.com/ethpandaops/ethereum-package/blob/main/network_params.yaml
 network:
   participants:
-  - el_type: geth
-    el_image: ethereum/client-go:v1.15.10
-    cl_type: lighthouse
-    cl_image: sigp/lighthouse:v7.0.0
-    validator_count: 32
-    count: 2
+    - el_type: geth
+      cl_type: lighthouse
+      cl_image: ethpandaops/lighthouse:unstable
+      validator_count: 32
+      count: 1
+    - el_type: nethermind
+      cl_type: lighthouse
+      cl_image: ethpandaops/lighthouse:unstable
+      validator_count: 32
+      count: 1
 
   additional_services:
     - dora # Helps to see validators are working
+    - assertoor
+
+  assertoor_params:
+    run_stability_check: true
+    run_block_proposal_check: true
+    run_transaction_test: true
+    run_blob_transaction_test: true
+
+  global_log_level: debug
+
+  snooper_enabled: false
 
   network_params:
     # this is 'kurtosis' network ID, which is a default network. With this configuration CL /spec endpoint will return CONFIG_NAME=testnet
     network_id: "3151908"
     deneb_fork_epoch: 0
     electra_fork_epoch: 0
-    
+    seconds_per_slot: 3
     # 74 = 32 validators * 2(number of el/cl nodes) + 10 (running on SSV/Anchor nodes)
     # aligns with validator_count configuration under participants section
     preregistered_validator_count: 74
     # NOTE: changes the number of slots in the epoch and potentially some other network settings.
     # docs: https://github.com/ethpandaops/ethereum-package/blob/main/README.md#configuration
-    preset: minimal
+    preset: mainnet
 
 monitor:
   enabled: false
@@ -32,4 +47,3 @@ nodes:
     count: 0
   anchor:
     count: 4
-  
