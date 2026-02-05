@@ -39,7 +39,7 @@ network:
 
   port_publisher:
     cl:
-      enabled: true
+      enabled: false
 
 monitor:
   enabled: false
